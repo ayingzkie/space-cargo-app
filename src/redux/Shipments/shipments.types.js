@@ -1,0 +1,1 @@
+export const SAVE_SHIPMENTS = 'SAVE_SHIPMENTS';
