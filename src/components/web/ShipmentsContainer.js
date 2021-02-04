@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react'
 
 import { connect } from 'react-redux'
 
-import { saveShipments } from '../redux/Shipments/shipments.actions'
-import {Container, Fade, makeStyles, Modal} from "@material-ui/core";
+import { saveShipments } from '../../redux/Shipments/shipments.actions'
+import {Container, Fade, Grid, makeStyles, Modal, useMediaQuery} from "@material-ui/core";
 
-import Header from './commons/Header'
+import Header from './Header'
+import HeaderMobile from "../mobile/HeaderMobile";
 
 const initialState = {
     modal: false,
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 function ShipmentsContainer(props) {
     const classes = useStyles();
     const [state, setState] = useState(initialState)
+    const isMobile = useMediaQuery('(min-width:1394px)')
 
     useEffect(()=>{
 
@@ -56,31 +58,11 @@ function ShipmentsContainer(props) {
     }
 
     return (
-        <>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={state.modal}
-                onClose={closeModal}
-                closeAfterTransition
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
-                <Fade in={state.modal}>
-                    <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Message</h2>
-                        <p id="transition-modal-description">
-                            {
-                                state.message
-                            }
-                        </p>
-                    </div>
-                </Fade>
-            </Modal>
-            <Header />
-        </>
+        <React.Fragment>
+            {
+                !isMobile ? <HeaderMobile/> : <Header />
+            }
+        </React.Fragment>
     )
 }
 

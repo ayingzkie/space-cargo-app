@@ -9,7 +9,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         case SAVE_SHIPMENTS: {
             return {
                 ...state,
-                lists: action?.data
+                lists: action?.payload
             }
         }
 

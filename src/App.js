@@ -1,11 +1,12 @@
 import logo from './logo.svg';
 // import './App.css';
-import ShipmentsContainer from "./components/ShipmentsContainer";
-
+import ShipmentsContainer from "./components/web/ShipmentsContainer";
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import DesktopLayout from "./components/layouts/DesktopLayout";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       {/*<header className="App-header">*/}
       {/*  <img src={logo} className="App-logo" alt="logo" />*/}
       {/*  <p>*/}
@@ -20,7 +21,11 @@ function App() {
       {/*    Learn React*/}
       {/*  </a>*/}
       {/*</header>*/}
-      <ShipmentsContainer />
+      <Router>
+        <Switch>
+          <DesktopLayout exact path="/" component={ShipmentsContainer} />
+        </Switch>
+      </Router>
     </div>
   );
 }
