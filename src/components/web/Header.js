@@ -70,8 +70,8 @@ function Header(props) {
 					return resp.json();
 				})
 				.then(async (json) => {
-					props.saveShipments(json)
-					await window.alert('Shipments Successfully Loaded!')
+					props.saveShipments(json);
+					await window.alert('Shipments Successfully Loaded!');
 				});
 		}
 	}
@@ -89,7 +89,7 @@ function Header(props) {
 
 	async function saveShipments() {
 		if (props.shipments.length) {
-			localStorage.setItem('shipments', JSON.stringify(props.shipments))
+			localStorage.setItem('shipments', JSON.stringify(props.shipments));
 		} else {
 			window.alert('No shipments loaded. Please load shipments first.');
 		}
