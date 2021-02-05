@@ -89,9 +89,12 @@ function Header(props) {
 
 	async function saveShipments() {
 		if (props.shipments.length) {
-			if(localStorage.getItem('shipments') && JSON.parse(localStorage.getItem('shipments')).length){
+			if (
+				localStorage.getItem('shipments') &&
+				JSON.parse(localStorage.getItem('shipments')).length
+			) {
 				window.alert('Shipments already been saved!');
-			}else {
+			} else {
 				localStorage.setItem('shipments', JSON.stringify(props.shipments));
 			}
 		} else {
