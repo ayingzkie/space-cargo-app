@@ -89,7 +89,11 @@ function Header(props) {
 
 	async function saveShipments() {
 		if (props.shipments.length) {
-			localStorage.setItem('shipments', JSON.stringify(props.shipments));
+			if(localStorage.getItem('shipments') && JSON.parse(localStorage.getItem('shipments')).length){
+				window.alert('Shipments already been saved!');
+			}else {
+				localStorage.setItem('shipments', JSON.stringify(props.shipments));
+			}
 		} else {
 			window.alert('No shipments loaded. Please load shipments first.');
 		}
