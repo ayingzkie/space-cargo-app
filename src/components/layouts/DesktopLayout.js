@@ -103,10 +103,14 @@ const initialState = {
 
 const DesktopLayout = props => {
     const [state, setState] = useState(initialState)
+
+
     const matches = useMediaQuery('(min-width:1280px)');
 
     const classes = useStyles()
 
+    // this will close the drawer when screen size is less than 1280px
+    // for more visibility when screen is small
     useEffect(()=>{
         if(!matches){
             closeDrawer()
@@ -121,6 +125,7 @@ const DesktopLayout = props => {
             open: !state.open
         })
     }
+
     function openDrawer() {
         setState({
             ...state,
