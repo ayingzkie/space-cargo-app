@@ -24,9 +24,11 @@ const Shipments = (props) => {
 		history.push(`/${id}`);
 	};
 
+	const shipments = props.shipments.filter((item)=> {return item.name.toUpperCase().includes(props.filter.toUpperCase())})
+
 	return (
 		<div>
-			{props.shipments.map((item, i) => {
+			{shipments.map((item, i) => {
 				return (
 					<ListItem button key={item.id} onClick={() => onItemClick(item.id)}>
 						<ListItemIcon>
@@ -45,6 +47,7 @@ const Shipments = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		shipments: state.shipments.lists,
+		filter: state.shipments.filter
 	};
 };
 

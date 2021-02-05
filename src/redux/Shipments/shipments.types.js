@@ -1,3 +1,4 @@
 export const LOAD_SHIPMENTS = 'LOAD_SHIPMENTS';
 export const SET_SHIPMENT = 'SET_SHIPMENT';
 export const UPDATE_SHIPMENT = 'UPDATE_SHIPMENT';
+export const SET_FILTER = 'SET_FILTER';

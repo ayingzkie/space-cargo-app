@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 import { Menu } from '@material-ui/icons';
-import { saveShipments } from '../../redux/Shipments/shipments.actions';
+import { saveShipments, setFilter } from '../../redux/Shipments/shipments.actions';
 import { connect } from 'react-redux';
 import CustomInput from '../commons/CustomInput';
 
@@ -77,14 +77,7 @@ function Header(props) {
 	}
 
 	async function onFilterChange(value) {
-		if (value.target.value) {
-			let filtered = props.shipments.filter((item) => {
-				return item.name.toUpperCase().includes(value.target.value.toUpperCase());
-			});
-			props.saveShipments(filtered);
-		} else {
-			props.saveShipments(JSON.parse(localStorage.getItem('shipments')));
-		}
+		props.setFilter(value.target.value);
 	}
 
 	async function saveShipments() {
@@ -168,6 +161,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		saveShipments: (data) => dispatch(saveShipments(data)),
+		setFilter: (filter) => dispatch(setFilter(filter))
 	};
 };
 

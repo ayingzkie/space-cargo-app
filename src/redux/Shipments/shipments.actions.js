@@ -1,4 +1,4 @@
-import { LOAD_SHIPMENTS, SET_SHIPMENT, UPDATE_SHIPMENT } from './shipments.types';
+import {LOAD_SHIPMENTS, SET_FILTER, SET_SHIPMENT, UPDATE_SHIPMENT} from './shipments.types';
 
 export const saveShipments = (data = []) => {
 	return {
@@ -23,3 +23,10 @@ export const updateShipment = (key, value) => {
 		},
 	};
 };
+
+export const setFilter = (filter='') => {
+	return {
+		type: SET_FILTER,
+		payload: filter
+	}
+}

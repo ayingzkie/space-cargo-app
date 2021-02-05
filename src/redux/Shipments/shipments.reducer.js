@@ -1,8 +1,9 @@
-import { LOAD_SHIPMENTS, SET_SHIPMENT, UPDATE_SHIPMENT } from './shipments.types';
+import { LOAD_SHIPMENTS, SET_SHIPMENT, UPDATE_SHIPMENT, SET_FILTER } from './shipments.types';
 
 const INITIAL_STATE = {
 	lists: [],
 	record: {},
+	filter: ''
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -29,6 +30,13 @@ const reducer = (state = INITIAL_STATE, action) => {
 					[action.payload.key]: action.payload.value,
 				},
 			};
+		}
+
+		case SET_FILTER: {
+			return {
+				...state,
+				filter: action.payload
+			}
 		}
 
 		default:
