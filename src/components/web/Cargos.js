@@ -1,102 +1,95 @@
-import React, {useEffect} from 'react'
-import {useParams} from "react-router-dom";
-import {setShipment, updateShipment} from "../../redux/Shipments/shipments.actions";
-import {connect} from 'react-redux'
-import {Box, Link, Typography} from "@material-ui/core";
-import CustomInput from "../commons/CustomInput";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { setShipment, updateShipment } from '../../redux/Shipments/shipments.actions';
+import { connect } from 'react-redux';
+import { Box, Link, Typography } from '@material-ui/core';
+import CustomInput from '../commons/CustomInput';
 
+const Cargos = (props) => {
+	const params = useParams();
 
-const Cargos = props => {
-    const params = useParams()
+	useEffect(() => {
+		const fetchShipments = () => {
+			if (props.shipments) {
+				let filtered = props.shipments.find((item) => {
+					return item.id === params.id;
+				});
 
-    useEffect(()=>{
-        const fetchShipments = () => {
-            fetch('http://localhost:5000/api/shipments/' + params.id).then((resp)=>{
-                return resp.json()
-            }).then((json)=>{
-                props.setShipment(json)
-            })
-        }
+				props.setShipment(filtered);
+			}
+		};
 
-        fetchShipments();
+		fetchShipments();
+	}, [params]);
 
-    }, [params])
+	function calculateCargoBays(units) {
+		if (units) {
+			let cargos = units.split(',').map(Number);
 
-    function calculateCargoBays(units){
-        if(units){
-            let cargos = units.split(',').map(Number)
+			return Math.ceil(cargos.reduce((a, b) => a + b, 0) / 10);
+		}
+	}
 
-            return Math.round(cargos.reduce((a, b) => a + b, 0) / 10)
-        }
+	async function onChangeCargo(value) {
+		props.updateShipment('boxes', value.target.value);
+	}
 
-    }
+	return (
+		<>
+			{params?.id && (
+				<Box>
+					<Typography variant="h4" component="h4">
+						{props.shipment.name}
+					</Typography>
 
-    async function onChangeCargo(value){
-        props.updateShipment('boxes', value.target.value)
-    }
+					<Link href={`mailto:${props.shipment.email}`} color="inherit">
+						{props.shipment.email}
+					</Link>
 
+					<div
+						style={{
+							margin: '15px 0 15px 0',
+						}}
+					>
+						<span>
+							Number of required cargo bays
+							<b> {calculateCargoBays(props.shipment.boxes)}</b>
+						</span>
+					</div>
 
-    return (
-        <>
-            {
-                params?.id && <Box>
+					<div>
+						<CustomInput
+							label={'Cargo Boxes'}
+							style={{
+								marginTop: '15px',
+								width: '500px',
+							}}
+							variant="outlined"
+							id="custom-css-outlined-input"
+							onChange={onChangeCargo}
+							value={props.shipment.boxes || ''}
+							InputLabelProps={{ shrink: props.shipment.boxes !== null }}
+						/>
+						{/*<TextField value={props.shipment.boxes} onChange={onChangeCargo}/>*/}
+					</div>
+				</Box>
+			)}
+		</>
+	);
+};
 
-                    <Typography
-                        variant="h4"
-                        component="h4"
-                    >
-                        { props.shipment.name }
-                    </Typography>
+const mapStateToProps = (state) => {
+	return {
+		shipment: state.shipments.record,
+		shipments: state.shipments.lists,
+	};
+};
 
-                    <Link href={`mailto:${props.shipment.email}`} color="inherit">
-                        { props.shipment.email }
-                    </Link>
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setShipment: (data) => dispatch(setShipment(data)),
+		updateShipment: (key, value) => dispatch(updateShipment(key, value)),
+	};
+};
 
-
-                    <div style={{
-                        margin: '15px 0 15px 0'
-                    }}>
-                        <span>Number of required cargo bays
-                            <b> {' '}
-                                {calculateCargoBays(props.shipment.boxes)}
-                            </b>
-                        </span>
-                    </div>
-
-                    <div>
-                        <CustomInput
-                            label={'Cargo Boxes'}
-                            style={{
-                                marginTop: '15px',
-                                width: '500px'
-                            }}
-                            variant="outlined"
-                            id="custom-css-outlined-input"
-                            onChange={onChangeCargo}
-                            value={ props.shipment.boxes || ''}
-                            InputLabelProps={{shrink: props.shipment.boxes !== null }}
-                        />
-                        {/*<TextField value={props.shipment.boxes} onChange={onChangeCargo}/>*/}
-                    </div>
-                </Box>
-            }
-        </>
-
-
-    )
-}
-
-const mapStateToProps = state => {
-    return {
-        shipment: state.shipments.record
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        setShipment: (data)=>dispatch(setShipment(data)),
-        updateShipment: (key, value)=>dispatch(updateShipment(key,value)),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cargos)
+export default connect(mapStateToProps, mapDispatchToProps)(Cargos);
