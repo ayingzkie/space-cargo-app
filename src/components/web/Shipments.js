@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { saveShipments } from '../../redux/Shipments/shipments.actions';
+import { saveShipments } from '@/redux/Shipments/shipments.actions';
 import { useHistory } from 'react-router';
 
 const Shipments = (props) => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { setShipment, updateShipment } from '../../redux/Shipments/shipments.actions';
+import { setShipment, updateShipment } from '@/redux/Shipments/shipments.actions';
 import { connect } from 'react-redux';
 import { Box, Link, Typography } from '@material-ui/core';
 import CustomInput from '../commons/CustomInput';
