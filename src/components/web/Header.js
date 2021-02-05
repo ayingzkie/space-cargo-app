@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import clsx from 'clsx';
 import { Menu } from '@material-ui/icons';
-import { saveShipments } from '@/redux/Shipments/shipments.actions';
+import { saveShipments } from '../../redux/Shipments/shipments.actions';
 import { connect } from 'react-redux';
 import CustomInput from '../commons/CustomInput';
 
