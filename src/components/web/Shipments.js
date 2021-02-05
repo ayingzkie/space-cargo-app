@@ -24,7 +24,9 @@ const Shipments = (props) => {
 		history.push(`/${id}`);
 	};
 
-	const shipments = props.shipments.filter((item)=> {return item.name.toUpperCase().includes(props.filter.toUpperCase())})
+	const shipments = props.shipments.filter((item) => {
+		return item.name.toUpperCase().includes(props.filter.toUpperCase());
+	});
 
 	return (
 		<div>
@@ -47,7 +49,7 @@ const Shipments = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		shipments: state.shipments.lists,
-		filter: state.shipments.filter
+		filter: state.shipments.filter,
 	};
 };
 

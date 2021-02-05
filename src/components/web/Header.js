@@ -161,7 +161,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		saveShipments: (data) => dispatch(saveShipments(data)),
-		setFilter: (filter) => dispatch(setFilter(filter))
+		setFilter: (filter) => dispatch(setFilter(filter)),
 	};
 };
 

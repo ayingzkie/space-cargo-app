@@ -3,7 +3,7 @@ import { LOAD_SHIPMENTS, SET_SHIPMENT, UPDATE_SHIPMENT, SET_FILTER } from './shi
 const INITIAL_STATE = {
 	lists: [],
 	record: {},
-	filter: ''
+	filter: '',
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -35,8 +35,8 @@ const reducer = (state = INITIAL_STATE, action) => {
 		case SET_FILTER: {
 			return {
 				...state,
-				filter: action.payload
-			}
+				filter: action.payload,
+			};
 		}
 
 		default:
