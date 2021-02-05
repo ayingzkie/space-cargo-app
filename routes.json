@@ -1,3 +1,5 @@
 {
-  "/api/shipments": "/shipments"
+  "/api/shipments": "/shipments?_sort=name",
+  "/api/shipments/:id": "/shipments/:id",
+  "/api/shipments?name=:searchstring": "/shipments?q=:searchstring"
 }

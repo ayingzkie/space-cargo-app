@@ -1,21 +1,11 @@
-import React, {useState} from 'react'
-import {
-    AppBar,
-    Container,
-    CssBaseline,
-    Divider,
-    Drawer,
-    IconButton,
-    List,
-    ListItem,
-    makeStyles
-} from "@material-ui/core";
+import React, {useEffect, useState} from 'react'
+import {Container, Drawer, List, makeStyles, useMediaQuery} from "@material-ui/core";
 import clsx from 'clsx';
 import Shipments from "../web/Shipments";
 import Header from "../web/Header";
-import {ChevronLeft} from "@material-ui/icons";
 
-const drawerWidth = 240;
+
+const drawerWidth = 340;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     drawerPaper: {
+        height: '100vh',
+        overflow: "scroll",
         position: 'relative',
         whiteSpace: 'nowrap',
         width: drawerWidth,
@@ -63,9 +55,11 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
+        paddingTop: '64px'
     },
     drawerPaperClose: {
-        overflowX: 'hidden',
+        height: '100vh',
+        overflow: "scroll",
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -74,8 +68,14 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             width: theme.spacing(9),
         },
+
     },
-    appBarSpacer: theme.mixins.toolbar,
+    appBarSpacer: {
+        marginTop: '64px'
+    },
+    appBarSpacerMobile: {
+        marginTop: '140px'
+    },
     content: {
         flexGrow: 1,
         height: '100vh',
@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         overflow: 'auto',
         flexDirection: 'column',
+        backgroundColor: theme.palette.primary
     },
     fixedHeight: {
         height: 240,
@@ -97,13 +98,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const initialState = {
-    open: false
+    open: true
 }
 
 const DesktopLayout = props => {
     const [state, setState] = useState(initialState)
+    const matches = useMediaQuery('(min-width:1280px)');
 
     const classes = useStyles()
+
+    useEffect(()=>{
+        if(!matches){
+            closeDrawer()
+        }else {
+            openDrawer()
+        }
+    },[matches])
 
     function handleOpenCloseDrawer(){
         setState({
@@ -111,33 +121,43 @@ const DesktopLayout = props => {
             open: !state.open
         })
     }
+    function openDrawer() {
+        setState({
+            ...state,
+            open:true
+        })
+    }
+
+
+    function closeDrawer() {
+        setState({
+            ...state,
+            open:false
+        })
+    }
+
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
-            <Header open={state.open} handleOpenCloseDrawer={handleOpenCloseDrawer}/>
-            <Drawer
-                variant="permanent"
-                open={state.open}
-                classes={{
-                    paper: clsx(classes.drawerPaper, !state.open && classes.drawerPaperClose),
-                }}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleOpenCloseDrawer}>
-                        <ChevronLeft />
-                    </IconButton>
-                </div>
-                <Divider />
-                <List>
-                    <Shipments />
-                </List>
-            </Drawer>
-            <main className={classes.content}>
-                <Container className={classes.container}>
-                    { props.children }
-                </Container>
-            </main>
+
+                <Header open={state.open} handleOpenCloseDrawer={handleOpenCloseDrawer}/>
+                <Drawer
+                    variant="permanent"
+                    open={state.open}
+                    classes={{
+                        paper: clsx(classes.drawerPaper, !state.open && classes.drawerPaperClose),
+                    }}
+                >
+                    <List style={!state.open || !matches ? {paddingTop :'80px'} : {}}>
+                        <Shipments />
+                    </List>
+                </Drawer>
+                <main className={classes.content}>
+                    <div className={clsx(classes.appBarSpacer, !matches && classes.appBarSpacerMobile)} />
+                    <Container className={classes.container}>
+                        { props.children }
+                    </Container>
+                </main>
         </div>
     )
 }

@@ -1,16 +1,6 @@
 import React from "react";
-import {
-    makeStyles,
-    Grid,
-    TextField,
-    Button,
-    Typography,
-    Menu,
-    MenuItem,
-    IconButton,
-    useMediaQuery
-} from "@material-ui/core";
-import { MoreVert } from '@material-ui/icons';
+import {Grid, IconButton, makeStyles, Menu, MenuItem, TextField, Typography} from "@material-ui/core";
+import {MoreVert} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -1,30 +1,48 @@
 import React, {useEffect} from 'react'
-import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import { ShoppingCart } from '@material-ui/icons';
-import { connect } from 'react-redux'
+import {ListItem, ListItemIcon, ListItemText, Typography} from "@material-ui/core";
+import {connect} from 'react-redux'
 import {saveShipments} from "../../redux/Shipments/shipments.actions";
+import {useHistory} from "react-router";
 
 const Shipments = props => {
 
-    useEffect(()=>{
-        if(props.shipments){
-            window.alert('Ooops! No shipments has been loaded. Please load shipments.')
-        }
+    const history = useHistory()
+
+    useEffect( ()=>{
+       const checkShipments = async () => {
+           if(props.shipments){
+               window.alert('Ooops! No shipments has been loaded. Please load shipments.')
+               await history.push("/")
+
+           }
+       }
+
+       checkShipments();
+
     }, [])
 
-    const shipments = props.shipments.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0) )
+
+    const onItemClick = id => {
+        history.push(`/${id}`)
+    }
 
     return (
         <div>
             {
-                shipments.map((item)=>{
+                props.shipments.map((item, i)=>{
                     return (
-                        <ListItem button key={item.id}>
-                            <ListItemIcon>
-                                <ShoppingCart />
-                            </ListItemIcon>
-                            <ListItemText primary={item.name} />
-                        </ListItem>
+                            <ListItem button key={item.id} onClick={()=>onItemClick(item.id)}>
+                                <ListItemIcon>
+                                    <Typography component={'h4'} variant={'h4'}>
+                                        {
+                                            i+1
+                                        }
+                                    </Typography>
+                                </ListItemIcon>
+                                <ListItemText primary={item.name} />
+
+
+                            </ListItem>
                     )
                 })
             }
@@ -42,7 +60,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveShipments: dispatch(saveShipments())
+        saveShipments: (data)=>dispatch(saveShipments(data))
     }
 }
 
